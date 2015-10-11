@@ -158,3 +158,15 @@ _À partir du projet avant ES6-ation._
   - Ensuite, l'affichage des résultats de la dernière recherche (rien si pas de recherche)
 
 * (Facultatif, pour les plus rapides) Séparer les modules, un par fichier.
+
+* (Science Fiction) _Single-Page Application_ : Sur une seule page html
+  - départager l'URL sur le caractère ```#``` (```window.location.hash```)
+  - s'il n'y en a pas, créer deux liens (ajouter, chercher par espèce)
+  - si le fragment après # est ```create```, afficher les champs de saisie
+  - si le fragment après # est ```search```, afficher le chap de recherche
+
+## ES6
+
+* Convertir les modules en modules ES6
+
+* Réimplémenter le module ```inventory``` comme une ```class``` javascript
