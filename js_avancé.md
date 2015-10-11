@@ -134,25 +134,27 @@ _À partir du projet avant ES6-ation._
 * Créer un module (IIFE) qui expose un constructeur ```Animal``` :
   - ```new Animal(id, name, species, race, age)``` retourne un objet avec chacune des propriétés fournies
 
-* Créer un module (IIFE) qui expose l'API suivante :
+* Créer un module (IIFE) ```inventory``` qui expose l'API suivante :
   
   - ajouter un animal : ```addAnimal(name, species, race, age)```
   - retirer un animal : ```removeAnimal(id)```
   - obtenir les infos d'un animal à partir de son id : ```getAnimal(id)``` (retourne un objet de type ```Animal```)
-  - chercher des animaux par espèce: ```findAnimalWithSpecies(species)``` (retourne l'id)
+  - chercher des animaux par espèce: ```findAnimalWithSpecies(species)``` (retourne un ```Animal```)
   
   Bien sûr, l'encapsulation est complète. L'id est automatiquement généré à l'addition.
 
-* Créer un module qui d'affichage pour la saisie d'un animal ; il expose l'API suivante :
+* Créer un module (input) qui d'affichage pour la saisie d'un animal ; il expose l'API suivante :
   
   - ```getAnimalInput()``` (retourne un élément HTML)
   
   Côté implémentation, il s'agit de champs pour chaque information (sauf l'id bien sûr).
 
-* Créer un module qui permet d'afficher une liste d'animaux (niveau de détail au choix, le plus, le mieux) ; API :
+* (Facultatif, pour les plus rapides) Créer un module qui permet d'afficher une liste d'animaux (niveau de détail au choix, le plus, le mieux) ; API :
   - ```showAnimals(animalsArray)``` (retourne un élément HTML, animalsArray est un tableau d'```Animal```)
 
 * Modifier la page HTML ainsi :
   - En haut, une section avec les champs pour la saisie d'un animal.
   - En dessous, une section avec un champ pour la recherche dans la base d'animaux par espèce
   - Ensuite, l'affichage des résultats de la dernière recherche (rien si pas de recherche)
+
+* (Facultatif, pour les plus rapides) Séparer les modules, un par fichier.
