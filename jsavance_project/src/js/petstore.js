@@ -47,4 +47,33 @@ var inventory = function() {
           }
 }();
 
-module.exports = {Animal: Animal, inventory: inventory}
+function addAnimal() {
+  var name = document.querySelector('#name');
+  var species = document.querySelector('#species');
+  var race = document.querySelector('#race');
+  var age = document.querySelector('#age');
+  inventory.addAnimal(name, species, race, age);
+}
+
+var input = function() {
+  // alternative : import JQuery ! Or better, a template system
+  var markup =`
+  <div>
+    <label for="name">Nom</label>
+    <input id="name"></input>
+    <label for="species">Espèce</label>
+    <input id="species"></input>
+    <label for="race">Race</label>
+    <input id="race"></input>
+    <label for="age">Âge</label>
+    <input id="age"></input>
+    <button id="add-button">Ajouter</button>
+  </div>`;
+  var element = document.createElement('section');
+  element.innerHTML = markup;
+  var button = element.querySelector('#add-button');
+  button.addEventListener('click', addAnimal());
+  return element;
+}();
+
+module.exports = { Animal: Animal, inventory: inventory, input: input }
