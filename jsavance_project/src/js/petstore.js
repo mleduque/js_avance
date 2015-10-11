@@ -72,7 +72,7 @@ var input = function() {
   var element = document.createElement('section');
   element.innerHTML = markup;
   var button = element.querySelector('#add-button');
-  button.addEventListener('click', addAnimal());
+  button.addEventListener('click', addAnimal);
   return element;
 }();
 
