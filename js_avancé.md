@@ -137,7 +137,7 @@ _À partir du projet avant ES6-ation._
 * Créer un module (IIFE) ```inventory``` qui expose l'API suivante :
   
   - ajouter un animal : ```addAnimal(name, species, race, age)```
-  - retirer un animal : ```removeAnimal(id)```
+  - retirer un animal : ```removeAnimal(id)``` [facultatif]
   - obtenir les infos d'un animal à partir de son id : ```getAnimal(id)``` (retourne un objet de type ```Animal```)
   - chercher des animaux par espèce: ```findAnimalWithSpecies(species)``` (retourne un ```Animal```)
   
@@ -149,11 +149,15 @@ _À partir du projet avant ES6-ation._
   
   Côté implémentation, il s'agit de champs pour chaque information (sauf l'id bien sûr).
 
+* Sur la page HTML, insérer les champs de saisie d'un animal.
+
+* Remplacer l'implémentation de l'inventaire par une implémentation serveur en utilisant le service (qui se lance avec ```nodejs main.js```) grâce à des XmlHttpRequest.
+  - L'API doit être modifiée ?
+
 * (Facultatif, pour les plus rapides) Créer un module qui permet d'afficher une liste d'animaux (niveau de détail au choix, le plus, le mieux) ; API :
   - ```showAnimals(animalsArray)``` (retourne un élément HTML, animalsArray est un tableau d'```Animal```)
 
-* Modifier la page HTML ainsi :
-  - En haut, une section avec les champs pour la saisie d'un animal.
+* (Facultatif, pour les plus rapides) Modifier la page HTML ainsi :
   - En dessous, une section avec un champ pour la recherche dans la base d'animaux par espèce
   - Ensuite, l'affichage des résultats de la dernière recherche (rien si pas de recherche)
 
@@ -170,3 +174,6 @@ _À partir du projet avant ES6-ation._
 * Convertir les modules en modules ES6
 
 * Réimplémenter le module ```inventory``` comme une ```class``` javascript
+
+* Modifier la partie XmlHttpRequest en utilisant des promises
+  - encore une fois, impact sur l'API : API synchrone avec valeur de retour promesse possible
