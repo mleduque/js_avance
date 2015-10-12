@@ -1,0 +1,76 @@
+var Datastore = require('nedb');
+var db = new Datastore({ filename: './animals.db', autoload: true });
+
+var restify = require('restify');
+var server = restify.createServer();
+server.use(restify.bodyParser());
+  
+server.get('/animal/:id', function(req, res, next) {
+  db.find({_id: req.params.id}, function(err, docs) {
+    if (err) {
+      return res.next(err);
+    }
+    if (docs.length === 0) {
+      res.send(404, new Error('Not found'));
+      return res.next();
+    }
+    var animal = { id: docs[0]._id, name: docs[0].name, species: docs[0].species,
+                      race:docs[0].race, age:docs[0].age };
+    res.send(animal);
+    res.next();
+  });
+});
+
+server.get('/animal', function(req, res, next) {
+  db.find({_id: { $exists: true }}, function(err, docs) {
+    if (err) {
+      return res.next(err);
+    }
+    res.send(docs.map(function(doc) {
+      return doc._id;
+    }));
+    res.next();
+  });
+});
+
+server.put('/animal/:id', function(req, res, next) {
+  console.log(req.params);
+  db.find({_id: req.params.id}, function(err, docs) {
+    if (err) {
+      return res.next(err);
+    }
+    if (docs.length !== 0) {
+      res.send(400, 'Already exists');
+      return res.next();
+    } else {
+      var animal = { _id: req.params.id, name: req.params.name, species: req.params.species,
+                      race:req.params.race, age:req.params.age };
+      db.insert(animal, function(err, newDoc) {
+        if (err) {
+          return res.next(err);
+        }
+        res.send(200);
+        res.next();
+      });
+    }
+  });
+  console.log(req.body);
+  res.send(200);
+  res.next();
+});
+
+server.del('/animal/:id', function(req, res, next) {
+  db.remove({ _id: req.params.id }, {}, function (err, numRemoved) {
+    if (numRemoved !== 1) {
+      res.send(404, new Error('Not found'));
+      return res.next();
+    } else {
+      res.send(200);
+      res.next();
+    }
+  });
+});
+
+server.listen(8090, function() {
+  console.log('%s listening at %s', server.name, server.url);
+});
