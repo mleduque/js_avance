@@ -47,12 +47,108 @@ var inventory = function() {
           }
 }();
 
+var inventory2 = function() {
+  var counter = 1;
+  var base_url = 'http://localhost:8080/services/';
+
+  var addAnimal = function(name, species, race, age, callback) {
+    var animal = new Animal(counter, name, species, race, age);
+    counter++;
+    var request = new XMLHttpRequest();
+    request.onreadystatechange = function(e) {
+      if (request.readyState === 4) {
+        if (request.status === 200) {
+          callback.onSuccess(animal.id);
+        } else {
+          callback.onFailure(request.statusText);
+        }
+      }
+    };
+    request.open('PUT', base_url + 'animal/' + animal.id);
+    request.setRequestHeader('Content-Type', 'application/json');
+    console.log('create animal', animal);
+    request.send(JSON.stringify(animal));
+  }
+
+  var getAnimal = function (id, callback) {
+    var request = new XMLHttpRequest();
+    request.onreadystatechange = function(e) {
+      if (request.readyState === 4) {
+        if (request.status === 200) {
+          if (request.responseType === 'json') {
+            var animal = JSON.parse(request.responseText);
+            callback.onSuccess(animal);
+          } else {
+            callback.onFailure('Unexpected response type:' + request.responseType);
+          }
+        } else {
+          callback.onFailure(request.statusText);
+        }
+      }
+    };
+    request.open('GET', base_url + 'animal/' + id);
+    request.send(null);
+  }
+
+  var removeAnimal = function (id, callback) {
+    var request = new XMLHttpRequest();
+    request.onreadystatechange = function(e) {
+      if (request.readyState === 4) {
+        if (request.status === 200) {
+          callback.onSuccess();
+        } else {
+          callback.onFailure(request.statusText);
+        }
+      }
+    };
+    request.open('DELETE', base_url + 'animal/' + animal.id);
+    request.send(null);
+  }
+
+  var findAnimalWithSpecies = function (species, callback) {
+    var request = new XMLHttpRequest();
+    request.onreadystatechange = function(e) {
+      if (request.readyState === 4) {
+        if (request.status === 200) {
+          if (request.responseType === 'json') {
+            var animals = JSON.parse(request.responseText);
+            callback.onSuccess(animals);
+          } else {
+            callback.onFailure('Unexpected response type:' + request.responseType);
+          }
+        } else {
+          callback.onFailure(request.statusText);
+        }
+      };
+      request.open('GET', base_url + 'byspecies/' + id);
+      request.send(null);
+    }
+  }
+
+  return {  addAnimal: addAnimal,
+            removeAnimal: removeAnimal,
+            getAnimal: getAnimal,
+            findAnimalWithSpecies: findAnimalWithSpecies
+          };
+}();
+
 function addAnimal() {
   var name = document.querySelector('#name').value;
   var species = document.querySelector('#species').value;
   var race = document.querySelector('#race').value;
   var age = document.querySelector('#age').value;
   inventory.addAnimal(name, species, race, age);
+}
+
+function addAnimal2() {
+  var name = document.querySelector('#name').value;
+  var species = document.querySelector('#species').value;
+  var race = document.querySelector('#race').value;
+  var age = document.querySelector('#age').value;
+  inventory2.addAnimal(name, species, race, age, {
+    onSuccess: function() { window.alert('success') },
+    onFailure: function() { window.alert('On no!') },
+  });
 }
 
 var input = function() {
@@ -72,7 +168,7 @@ var input = function() {
   var element = document.createElement('section');
   element.innerHTML = markup;
   var button = element.querySelector('#add-button');
-  button.addEventListener('click', addAnimal);
+  button.addEventListener('click', addAnimal2);
   return element;
 }();
 
