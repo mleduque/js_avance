@@ -15,5 +15,16 @@ module.exports = {
           },
           { test: /\.css$/, loader: "style!css" }
       ]
+  },
+  devServer: {
+    proxy: [
+      {
+        path: new RegExp('/services/(.*)'),
+        target: 'http://localhost:8090',
+        rewrite: function(req, options) {
+          req.url = req.path.replace(options.path, '$1');
+        }
+      }
+    ]
   }
 };
