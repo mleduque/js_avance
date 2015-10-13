@@ -137,11 +137,12 @@ _À partir du projet avant ES6-ation._
 * Créer un module (IIFE) ```inventory``` qui expose l'API suivante :
   
   - ajouter un animal : ```addAnimal(name, species, race, age)```
-  - retirer un animal : ```removeAnimal(id)``` [facultatif]
-  - obtenir les infos d'un animal à partir de son id : ```getAnimal(id)``` (retourne un objet de type ```Animal```)
+  - (optionnel) retirer un animal : ```removeAnimal(id)``` [facultatif]
+  - (optionnel) obtenir les infos d'un animal à partir de son id : ```getAnimal(id)``` (retourne un objet de type ```Animal```)
   - chercher des animaux par espèce: ```findAnimalWithSpecies(species)``` (retourne un ```Animal```)
   
   Bien sûr, l'encapsulation est complète. L'id est automatiquement généré à l'addition.
+  Confirmer le résultat en utilisant ```console.log```
 
 * Créer un module (input) qui d'affichage pour la saisie d'un animal ; il expose l'API suivante :
   
@@ -151,8 +152,10 @@ _À partir du projet avant ES6-ation._
 
 * Sur la page HTML, insérer les champs de saisie d'un animal.
 
-* Remplacer l'implémentation de l'inventaire par une implémentation serveur en utilisant le service (qui se lance avec ```nodejs main.js```) grâce à des XmlHttpRequest.
-  - L'API doit être modifiée ?
+* Remplacer l'implémentation de l'inventaire par une implémentation serveur en utilisant un service REST
+  - fournir le service (qui se lance avec ```nodejs main.js```)
+  - utiliser des XmlHttpRequest (coup de pouce: ```JSON.stringify```) .
+  - L'API doit être modifiée ? Callbacks partout...
 
 * (Facultatif, pour les plus rapides) Créer un module qui permet d'afficher une liste d'animaux (niveau de détail au choix, le plus, le mieux) ; API :
   - ```showAnimals(animalsArray)``` (retourne un élément HTML, animalsArray est un tableau d'```Animal```)
