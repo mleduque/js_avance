@@ -9,27 +9,27 @@ function Animal(id, name, species, race, age) {
 var inventory = function() {
   var animals = [];
   var counter = 0;
-  function addAnimal(name, species, race, age) {
+  var addAnimal = function(name, species, race, age) {
     animals.push(new Animal(counter, name, species, race, age));
     counter++;
-  }
-  function removeAnimal(id) {
+  };
+  var removeAnimal = function(id) {
     var i;
     for (i = 0; i < animals.length; i++) {
       if (animals[i] === id) {
         animals.splice(i, 1); // remove the element
       }
     }
-  }
-  function getAnimal(id) {
+  };
+  var getAnimal = function(id) {
     var i;
     for (i = 0; i < animals.length; i++) {
       if (animals[i] === id) {
         return animals[id];
       }
     }
-  }
-  function findAnimalWithSpecies(species) {
+  };
+  var findAnimalWithSpecies = function(species) {
     var result = [];
     var i;
     for (i = 0; i < animals.length; i++) {
@@ -38,7 +38,7 @@ var inventory = function() {
       }
     }
     return result;
-  }
+  };
 
   return {  addAnimal: addAnimal,
             removeAnimal: removeAnimal,
@@ -48,10 +48,10 @@ var inventory = function() {
 }();
 
 function addAnimal() {
-  var name = document.querySelector('#name');
-  var species = document.querySelector('#species');
-  var race = document.querySelector('#race');
-  var age = document.querySelector('#age');
+  var name = document.querySelector('#name').value;
+  var species = document.querySelector('#species').value;
+  var race = document.querySelector('#race').value;
+  var age = document.querySelector('#age').value;
   inventory.addAnimal(name, species, race, age);
 }
 
