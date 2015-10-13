@@ -4,7 +4,12 @@ var db = new Datastore({ filename: './animals.db', autoload: true });
 var restify = require('restify');
 var server = restify.createServer();
 server.use(restify.bodyParser());
-  
+
+var bunyan = require('bunyan');
+server.on('after', restify.auditLogger({
+  log: bunyan.createLogger({ name: 'audit', stream: process.stdout })
+}));
+
 server.get('/animal/:id', function(req, res, next) {
   db.find({_id: req.params.id}, function(err, docs) {
     if (err) {
@@ -21,7 +26,7 @@ server.get('/animal/:id', function(req, res, next) {
   });
 });
 
-server.get('/animal', function(req, res, next) {
+server.get('/animals', function(req, res, next) {
   db.find({_id: { $exists: true }}, function(err, docs) {
     if (err) {
       return res.next(err);
@@ -33,8 +38,23 @@ server.get('/animal', function(req, res, next) {
   });
 });
 
+server.get('/byspecies/:species', function(req, res, next) {
+  db.find({species: req.params.species}, function(err, docs) {
+    if (err) {
+      return res.next(err);
+    }
+    var result = [];
+    for (var i = 0; i < docs.length; i++) {
+      result.push({ id: docs[i]._id, name: docs[i].name, species: docs[i].species,
+                        race: docs[i].race, age: docs[i].age });
+    }
+    res.send(result);
+    res.next();
+  });
+});
+
 server.put('/animal/:id', function(req, res, next) {
-  console.log(req.params);
+  console.log('PUT /animal/' + req.params.id + ' ' + req.params);
   db.find({_id: req.params.id}, function(err, docs) {
     if (err) {
       return res.next(err);
@@ -45,6 +65,7 @@ server.put('/animal/:id', function(req, res, next) {
     } else {
       var animal = { _id: req.params.id, name: req.params.name, species: req.params.species,
                       race:req.params.race, age:req.params.age };
+      console.log('Adding animal:', animal);
       db.insert(animal, function(err, newDoc) {
         if (err) {
           return res.next(err);
@@ -54,7 +75,6 @@ server.put('/animal/:id', function(req, res, next) {
       });
     }
   });
-  console.log(req.body);
   res.send(200);
   res.next();
 });
