@@ -59,7 +59,7 @@ Avec nodejs et npm installés.
 
 * Installer le loader CSS
   ```
-  > npm install css-loader style-loader
+  > npm install css-loader style-loader --save
   ```
 * Créer le fichier ```src/css/style.css```
   ```css
@@ -67,7 +67,7 @@ Avec nodejs et npm installés.
     background: yellow;
   }
   ```
-* Intégrer la feuille de style : ajouter en hat de entry.js :
+* Intégrer la feuille de style : ajouter en haut de entry.js :
   ```javascript
   require("../css/style.css");
   ```
@@ -131,23 +131,23 @@ _À partir du projet avant ES6-ation._
 
 * Créer un fichier ```petstore.js```. Les 'modules' suivants seront créés dans ce fichier.
 
-* Créer un module (IIFE) qui expose un constructeur ```Animal``` :
+* Créer  un constructeur ```Animal``` :
   - ```new Animal(id, name, species, race, age)``` retourne un objet avec chacune des propriétés fournies
 
 * Créer un module (IIFE) ```inventory``` qui expose l'API suivante :
-  
+
   - ajouter un animal : ```addAnimal(name, species, race, age)```
   - (optionnel) retirer un animal : ```removeAnimal(id)``` [facultatif]
   - (optionnel) obtenir les infos d'un animal à partir de son id : ```getAnimal(id)``` (retourne un objet de type ```Animal```)
   - chercher des animaux par espèce: ```findAnimalWithSpecies(species)``` (retourne un ```Animal```)
-  
+
   Bien sûr, l'encapsulation est complète. L'id est automatiquement généré à l'addition.
   Confirmer le résultat en utilisant ```console.log```
 
 * Créer un module (input) qui d'affichage pour la saisie d'un animal ; il expose l'API suivante :
-  
+
   - ```getAnimalInput()``` (retourne un élément HTML)
-  
+
   Côté implémentation, il s'agit de champs pour chaque information (sauf l'id bien sûr).
 
 * Sur la page HTML, insérer les champs de saisie d'un animal.
