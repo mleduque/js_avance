@@ -202,9 +202,6 @@ _On peut examiner le package.json._
 
 ## ES6
 
-* Convertir les modules en modules ES6
+* Réimplémenter le module ```inventory``` comme une ```class``` javascript.
 
-* Réimplémenter le module ```inventory``` comme une ```class``` javascript
-
-* Modifier la partie XmlHttpRequest en utilisant des promises
-  - encore une fois, impact sur l'API : API synchrone avec valeur de retour promesse possible
+* Remplacer la partie XmlHttpRequest en utilisant fetch.
