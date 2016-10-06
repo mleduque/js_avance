@@ -8,14 +8,17 @@ Avec nodejs et npm installés.
 * Installer webpack globalement
   npm install webpack -g
 * Créer un projet
-  ```
+
+```
   > npm init
-  ```
+```
   _répondre aux questions par défaut_ sauf : version ```1.0.0``` + point d'entrée= ```src/js/entry.js```
 * créer le fichier ```src/js/entry.js```
-  ```javascript
+
+```javascript
   document.write('It works');
-  ```
+```
+
 * Créer le fichier ```index.html```
   ```html
   <html>
