@@ -20,7 +20,8 @@ Avec nodejs et npm installés.
 ```
 
 * Créer le fichier ```index.html```
-  ```html
+
+```html
   <html>
     <head>
         <meta charset="utf-8">
@@ -29,53 +30,69 @@ Avec nodejs et npm installés.
         <script type="text/javascript" src="bundle.js" charset="utf-8"></script>
     </body>
   </html>
-  ```
+```
+
 * Prendre en compte entry.js dans le résultat de webpack
-  ```
+
+```
   > webpack src/js/entry.js bundle.js
-  ```
-  _On peut examiner ```bundle.js```._
+```
+
+_On peut examiner ```bundle.js```._
 
 * Installer webpack-dev-server _globalement_
-  ```
+
+```
   > npm install webpack-dev-server -g
-  ```
+```
 * On peut démarrer le serveur de dev :
-  ```
+
+```
   > webpack-dev-server
-  ```
-  _Ouvrir le navigateur http://localhost:8080 ou http://localhost:8080/webpack-dev-server/_
+```
+
+_Ouvrir le navigateur http://localhost:8080 ou http://localhost:8080/webpack-dev-server/_
 
 ### Deuxième phase, ajout d'un fichier
 
 * Créer un fichier ```src/js/content.js```
-  ```javascript
+
+```javascript
   module.exports = "Content included from content.js.";
-  ```
+```
+
 * Remplacer la ligne document.write dans entry.js
-  ```javascript
+
+```javascript
   var content = require('./content.js');
   document.write(content);
-  ```
+```
 
 ### Troisième phase : CSS
 
 * Installer le loader CSS
-  ```
+
+```
   > npm install css-loader style-loader --save
-  ```
+```
+
 * Créer le fichier ```src/css/style.css```
-  ```css
+
+```css
   body {
     background: yellow;
   }
-  ```
+```
+
 * Intégrer la feuille de style : ajouter en haut de entry.js :
-  ```javascript
+
+```javascript
   require("../css/style.css");
-  ```
+```
+
 * Ajouter un fichier de configuration ```webpack.config.js``` :
-  ```javascript
+
+```javascript
   module.exports = {
     entry: "./src/js/entry.js",
     output: {
@@ -88,18 +105,23 @@ Avec nodejs et npm installés.
         ]
     }
   };
-  ```
+```
+
 * Constater la prise en compte de la feuille de style dans la page web.
 
 ## Intégration de babel (quand on est prêt à parler ES6)
 
 * Ajouter une dépendance sur babel-loader
-    ```
+
+```
     > npm install --save-dev babel-loader
-    ```
-    _On peut examiner le package.json._
+```
+
+_On peut examiner le package.json._
+
 * modifier le ```webpack.config.js```, ajouter un élément ```loader```
-  ```javascript
+
+```javascript
   + var path = require('path');
     module.exports = {
 
@@ -110,34 +132,37 @@ Avec nodejs et npm installés.
   +      loader: 'babel-loader'
   +    },
        { test: /\.css$/, loader: "style!css" }
-  ```
+```
+
 * Créer un fichier ```src/es6/greeting.es6```
-  ```javascript
+
+```javascript
   export default function() {
     let greeting = document.createElement('div');
     greeting.textContent = 'Hello World';
     return greeting;
   }
-  ```
+```
+
 * Modifier ```entry.js``` :
-  ```javascript
+
+```javascript
   var greetingGenerator = require('../es6/greeting.es6');
   var content = greetingGenerator();
   var body = document.querySelector('body');
   body.appendChild(content);
-  ```
+```
+
 * On peut déplacer ```entry.js``` dans ```src/es6``` et utiliser ```import``` au lieu de ```require``` (selon préférence).
 
-## IIFE
+## Modularisation du projet
 
-_À partir du projet avant ES6-ation._
-
-* Créer un fichier ```petstore.js```. Les 'modules' suivants seront créés dans ce fichier.
+* Créer un module ```aminal.js```.
 
 * Créer  un constructeur ```Animal``` :
   - ```new Animal(id, name, species, race, age)``` retourne un objet avec chacune des propriétés fournies
 
-* Créer un module (IIFE) ```inventory``` qui expose l'API suivante :
+* Créer un module ```inventory.js``` qui expose l'API suivante :
 
   - ajouter un animal : ```addAnimal(name, species, race, age)```
   - (optionnel) retirer un animal : ```removeAnimal(id)``` [facultatif]
@@ -147,7 +172,7 @@ _À partir du projet avant ES6-ation._
   Bien sûr, l'encapsulation est complète. L'id est automatiquement généré à l'addition.
   Confirmer le résultat en utilisant ```console.log```
 
-* Créer un module (input) qui d'affichage pour la saisie d'un animal ; il expose l'API suivante :
+* Créer un module (input.js) qui d'affichage pour la saisie d'un animal ; il expose l'API suivante :
 
   - ```getAnimalInput()``` (retourne un élément HTML)
 
