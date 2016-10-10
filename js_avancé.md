@@ -129,7 +129,10 @@ _On peut examiner le package.json._
   +    {
   +      // load es6 files using babel-loader
   +      test: path.join(__dirname, 'src/es6'),
-  +      loader: 'babel-loader'
+  +      loader: 'babel-loader',
+  +      query: {
+  +        presets: ['es2015'],
+  +      }
   +    },
        { test: /\.css$/, loader: "style!css" }
 ```
